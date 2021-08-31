@@ -1,8 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-let cors = require('cors')
+const cors = require('cors')
+const path = require('path');
 
-const HOST_NAME = 'localhost'
+const HOST_NAME = '0.0.0.0'
 const POST_ROUTE = '/save_data'
 const GET_ROUTE = '/mongo_data'
 const PORT = 5555
@@ -25,6 +26,9 @@ function insert_to_mongo(query_content) {
     });
   });
 }
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/client/index.html`))
+})
 app.get(GET_ROUTE, (req, res) => {
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
@@ -45,6 +49,6 @@ app.post(POST_ROUTE, (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST_NAME, () => {
   console.log(`listening at http://${HOST_NAME}:${PORT}`)
 });

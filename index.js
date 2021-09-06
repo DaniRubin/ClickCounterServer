@@ -6,7 +6,7 @@ const path = require('path');
 const HOST_NAME = '0.0.0.0'
 const POST_ROUTE = '/save_data'
 const GET_ROUTE = '/mongo_data'
-const PORT = 5555
+const PORT = 7500
 
 const app = express()
 app.use(bodyParser.json());
@@ -26,9 +26,7 @@ function insert_to_mongo(query_content) {
     });
   });
 }
-function getAmountOfData() {
 
-}
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/client/index.html`))
 })

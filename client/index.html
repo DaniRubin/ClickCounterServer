@@ -15,9 +15,24 @@
     right: 20px;
   }
 </style>
+<script>
+  function getAmount() {
+    const url = "http://35.85.48.63:7500/amountOfData"
+    // const url = "http://localhost:5555/amountOfData"
+    fetch(url).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      document.getElementById('amount').innerHTML = `יש בסף הכל ${data} רשומות`;
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+  getAmount()
+</script>
 
 <body>
   <h1>פותח על ידי דני רובין</h1>
+  <h3 id="amount"></h3>
   <div class="copyrights">ⒸDani Rubin</div>
 </body>
 

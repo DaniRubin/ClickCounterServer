@@ -26,9 +26,26 @@ function insert_to_mongo(query_content) {
     });
   });
 }
+function getAmountOfData() {
+
+}
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/client/index.html`))
 })
+
+app.get('/amountOfData', (req, res) => {
+  MongoClient.connect(url, function (err, db) {
+    if (err) return err.errmsg;
+    var dbo = db.db("AutoFeedbackDB");
+    dbo.collection("click").find({}).toArray(function (err, result) {
+      if (err) return err.errmsg;
+      db.close();
+      res.send(result.length.toString())
+    });
+  });
+})
+
+
 app.get(GET_ROUTE, (req, res) => {
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
@@ -49,6 +66,6 @@ app.post(POST_ROUTE, (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(PORT, HOST_NAME, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`listening at http://${HOST_NAME}:${PORT}`)
 });
